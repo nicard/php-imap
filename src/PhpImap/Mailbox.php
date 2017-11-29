@@ -553,6 +553,14 @@ class Mailbox {
 			$header->fromAddress = substr($matches[0], 14);
 		}
 		if(isset($head->to)) {
+
+            //Pegando cópia oculta enviada para cnpj@tilixpj.com.br
+            if (preg_match_all('/[0-9]{14}\@tilixpj.com.br/', $headersRaw, $matches)) {
+                if (count($matches) == 1) {
+                    $header->to[$matches[0][0]] = $matches[0][0];
+                }
+            }
+
 			$toStrings = array();
 			foreach($head->to as $to) {
 				if(!empty($to->mailbox) && !empty($to->host)) {
